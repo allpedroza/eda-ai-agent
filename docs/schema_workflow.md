@@ -41,11 +41,11 @@ variáveis devem ser priorizadas na análise estatística e nos modelos.
 1. Revisar manualmente as variáveis marcadas como "possível identificador" para confirmar se devem ser
    excluídas ou transformadas.
 2. Validar com o time de negócio se as variáveis categóricas de alta cardinalidade precisam de agrupamentos
-   (por exemplo, consolidar tipos de escola ou canais de indicação).
+   (por exemplo, consolidar tipos de instituição ou canais de indicação).
 3. Utilizar o JSON exportado para alimentar notebooks de EDA automatizada ou pipelines de feature store,
    garantindo rastreabilidade das decisões.
 4. Atualizar o `eda_framework_plan.md` com observações específicas obtidas a partir do relatório para que
-   FB e DS tenham um mapa claro dos dados disponíveis.
+   as equipes de Marketing e Ciência de Dados tenham um mapa claro dos dados disponíveis.
 
 Com esse fluxo, conseguimos responder rapidamente à pergunta sobre "quais variáveis temos à disposição"
 assim que os arquivos são disponibilizados em `data/`, acelerando a priorização de hipóteses e features.
