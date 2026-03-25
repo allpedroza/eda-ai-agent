@@ -108,7 +108,7 @@ def _resolve_via_key(
     return current_df, current_key
 
 
-# ─── ydata-profiling ─────────────────────────────────────────────────────────
+# ─── HTML profile interativo ─────────────────────────────────────────────────
 
 def run_html_profile(
     datasets: Dict[str, pd.DataFrame],
@@ -116,34 +116,34 @@ def run_html_profile(
     config: Dict[str, Any],
 ) -> None:
     """
-    Gera um relatório HTML do ydata-profiling para cada dataset.
+    Gera um HTML profile interativo (plotly) para cada dataset.
 
     Salva em <output_dir>/profiles/<dataset_name>_profile.html.
     Aceita configuração opcional por dataset via chave 'profiling':
         profiling:
-          mode: minimal      # 'minimal' | 'explorative' (padrão: minimal)
           title: "Meu título"
     """
-    try:
-        from ydata_profiling import ProfileReport
-    except ImportError:
-        print("  ⚠ ydata-profiling não instalado. Pulando geração de HTML profiles.")
-        return
+    from eda.html_report import generate_html_profile
 
     profile_dir = output_dir / "profiles"
     profile_dir.mkdir(parents=True, exist_ok=True)
 
     for ds_name, df in datasets.items():
-        ds_cfg   = config.get("datasets", {}).get(ds_name, {})
-        prof_cfg = ds_cfg.get("profiling", {})
-        mode     = prof_cfg.get("mode", "minimal")
-        title    = prof_cfg.get("title", f"EDA — {ds_name}")
-        minimal  = (mode == "minimal")
+        ds_cfg     = config.get("datasets", {}).get(ds_name, {})
+        prof_cfg   = ds_cfg.get("profiling", {})
+        title      = prof_cfg.get("title", f"EDA — {ds_name}")
+        target_col = ds_cfg.get("target_col")
 
         print(f"  → {ds_name} ({len(df):,} linhas)...")
-        profile  = ProfileReport(df, title=title, minimal=minimal, progress_bar=False)
         out_path = profile_dir / f"{ds_name}_profile.html"
-        profile.to_file(out_path)
+        generate_html_profile(
+            df,
+            name=ds_name,
+            output_path=out_path,
+            target_col=target_col,
+            title=title,
+            config_label=str(config.get("name", "")),
+        )
         print(f"     salvo em: {out_path}")
 
 
