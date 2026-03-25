@@ -1,0 +1,75 @@
+# Configuração de exemplo para o runner genérico de EDA
+# Uso: uv run python scripts/run_eda.py --config configs/example.yaml
+
+name: "EDA — Nome do Projeto"
+output_dir: "outputs"
+
+datasets:
+
+  principal:
+    path: "inputs/tabela_principal*.csv"   # suporta glob
+    sample_rows: 200000                    # null = carrega tudo
+    usecols:                               # null = todas as colunas
+      - id_cliente
+      - status
+      - valor
+      - data_evento
+      - categoria
+    id_col: id_cliente
+    target_col: status                     # coluna que representa o evento de interesse
+    target_mode: notnull                   # 'notnull' = presença do valor = evento positivo
+    date_cols:
+      - data_evento
+    primary_date_col: data_evento
+    group_col: categoria                   # chave de agrupamento para análise de concentração
+
+  secundario:
+    path: "inputs/tabela_secundaria*.csv"
+    sample_rows: null
+    id_col: id_equipamento
+    date_cols:
+      - inicio
+      - fim
+    primary_date_col: inicio
+    duration:                              # calcula duração entre dois timestamps
+      start_col: inicio
+      end_col: fim
+      unit: h                             # s | m | h | d
+      output_col: duracao_h
+    group_col: id_equipamento
+
+# Análise de concentração por chave de agrupamento
+concentration:
+  group_col: categoria                     # chave comum entre datasets
+  min_group_size: 30                       # ignora grupos com menos de N registros
+
+  groups:
+    principal:
+      dataset: principal
+      group_col: categoria
+      metrics:
+        n_registros:   {col: id_cliente, func: nunique}
+        taxa_evento:   {col: status,     func: notnull_pct}
+        valor_medio:   {col: valor,      func: mean}
+
+    secundario:
+      dataset: secundario
+      group_col: id_equipamento
+      rename_group_col: categoria          # renomeia para unificar no join
+      metrics:
+        n_ocorrencias:   {col: id_equipamento, func: count}
+        duracao_total_h: {col: duracao_h,       func: sum}
+        duracao_mediana: {col: duracao_h,       func: median}
+        ocorr_longas:    {col: duracao_h,       func: gt24_pct}  # % > 24h
+
+  # Funções de agregação disponíveis:
+  # nunique, count, sum, mean, median, max, min, std, p10, p90, p95
+  # notnull_pct  — % de valores não-nulos
+  # pct_true     — % de valores True/1
+  # gt{N}_pct    — % de valores > N  (ex: gt24_pct, gt100_pct)
+
+  risk_score:
+    metrics:
+      - {col: taxa_evento,     weight: 1.0, higher_is_worse: true}
+      - {col: n_ocorrencias,   weight: 1.0, higher_is_worse: true}
+      - {col: duracao_total_h, weight: 1.0, higher_is_worse: true}
