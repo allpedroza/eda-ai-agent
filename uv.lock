@@ -613,6 +613,7 @@ dependencies = [
     { name = "pyarrow" },
     { name = "pyyaml" },
     { name = "seaborn" },
+    { name = "setuptools" },
     { name = "tabulate" },
     { name = "ydata-profiling" },
 ]
@@ -635,6 +636,7 @@ requires-dist = [
     { name = "pyarrow", specifier = ">=14.0" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "seaborn", specifier = ">=0.13" },
+    { name = "setuptools", specifier = ">=82.0.1" },
     { name = "tabulate", specifier = ">=0.9" },
     { name = "ydata-profiling", specifier = ">=4.6" },
 ]
