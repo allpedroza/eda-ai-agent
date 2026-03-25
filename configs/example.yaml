@@ -1,0 +1,90 @@
+# ─── EDA Runner — Generic Config Example ─────────────────────────────────────
+#
+# Usage:
+#   uv run python scripts/run_eda.py --config configs/example.yaml
+#   uv run python scripts/run_eda.py --config configs/example.yaml --no-plots --no-profile
+#
+# All paths are relative to the working directory where the script is run.
+# ─────────────────────────────────────────────────────────────────────────────
+
+name: "My EDA Report"
+output_dir: "outputs"                # report + plots saved here
+
+# ─── Datasets ─────────────────────────────────────────────────────────────────
+datasets:
+  customers:
+    path: "inputs/customers*.csv"    # supports glob patterns
+    sample_rows: 500000              # optional: limit rows loaded
+    usecols:                         # optional: load only specific columns
+      - id_customer
+      - region
+      - plan
+      - status
+      - signup_date
+      - monthly_value
+    target_col: status               # highlighted in profiling output
+    primary_date_col: signup_date    # used for temporal distribution
+    group_col: region                # used for crosstab against target_col
+    # duration:                      # optional: compute a duration column
+    #   start_col: signup_date
+    #   end_col:   churn_date
+    #   output_col: tenure_days
+    #   unit: d                      # s | m | h | d
+    profiling:
+      mode: minimal                  # minimal | explorative (ydata-profiling)
+      title: "Customer Profile"
+
+  events:
+    path: "inputs/events*.parquet"
+    sample_rows: 200000
+    usecols:
+      - id_customer
+      - event_type
+      - event_date
+    primary_date_col: event_date
+    profiling:
+      mode: minimal
+
+# ─── Concentration Analysis ───────────────────────────────────────────────────
+# Aggregates metrics from one or more datasets by a shared group key,
+# merges them into a consolidated panel, computes a composite risk score,
+# and outputs a Spearman correlation matrix.
+concentration:
+  group_col: region                  # the final grouping key in the panel
+
+  groups:
+    customer_metrics:
+      dataset: customers             # must match a key under `datasets`
+      group_col: region              # grouping column inside this dataset
+      # rename_group_col: region     # optional: rename group_col in output
+      metrics:
+        n_customers:   {col: id_customer,   func: nunique}
+        avg_value:     {col: monthly_value, func: mean}
+        pct_active:    {col: status,        func: notnull_pct}
+        # pct_churned: {col: status,        func: pct_true}   # bool column
+        # pct_high:    {col: monthly_value, func: gt500_pct}  # gt{N}_pct factory
+
+    event_metrics:
+      dataset: events
+      group_col: id_customer
+      # 'via' allows multi-hop joins to translate id_customer → region
+      # before aggregation. Each hop brings one column from a bridge dataset.
+      via:
+        - dataset: customers          # bridge dataset (already loaded)
+          left_on: id_customer        # join key in the current dataset
+          right_on: id_customer       # join key in the bridge dataset
+          carry: region               # column to carry over (becomes new group_col)
+      metrics:
+        n_events: {col: event_type, func: count}
+
+  risk_score:
+    metrics:
+      - col: n_customers
+        weight: 1.0
+        higher_is_worse: false       # more customers = lower risk
+      - col: avg_value
+        weight: 0.5
+        higher_is_worse: false
+      - col: n_events
+        weight: 1.5
+        higher_is_worse: true        # more events = higher risk
