@@ -13,6 +13,8 @@ dependencies = [
     "jupyter>=1.0",
     "openpyxl>=3.1",
     "pyarrow>=14.0",
+    "pyyaml>=6.0",
+    "tabulate>=0.9",
 ]
 
 [dependency-groups]
