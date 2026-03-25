@@ -1,0 +1,21 @@
+[project]
+name = "eda-ai-agent"
+version = "0.1.0"
+description = "EDA padronizada para dados de telecom (banda larga + incidentes de rede)"
+requires-python = ">=3.11"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "seaborn>=0.13",
+    "plotly>=5.18",
+    "ydata-profiling>=4.6",
+    "jupyter>=1.0",
+    "openpyxl>=3.1",
+    "pyarrow>=14.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.0",
+]

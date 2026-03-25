@@ -1,0 +1,664 @@
+[
+  {
+    "file_path": "inputs/Bloco_1_2026-03-23_18_31_06_2026_03_23.csv",
+    "row_count": 50000,
+    "columns": [
+      {
+        "name": "codigo_cliente",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 2624,
+        "example_values": [
+          "1790403",
+          "2976680",
+          "2976629"
+        ],
+        "notes": []
+      },
+      {
+        "name": "codigo_contrato_air",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 2607,
+        "example_values": [
+          "5666608",
+          "5666559",
+          "5666500"
+        ],
+        "notes": []
+      },
+      {
+        "name": "mes_referencia",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 14,
+        "example_values": [
+          "2026-02",
+          "2026-01",
+          "2025-09"
+        ],
+        "notes": []
+      },
+      {
+        "name": "data_entrada_base",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 119,
+        "example_values": [
+          "2024-06-04",
+          "2024-06-03",
+          "2024-06-05"
+        ],
+        "notes": []
+      },
+      {
+        "name": "data_entrada_oferta",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 408,
+        "example_values": [
+          "2025-02-25",
+          "2024-06-04",
+          "2025-05-25"
+        ],
+        "notes": []
+      },
+      {
+        "name": "data_cancelamento",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 24.618000000000002,
+        "unique_values": 221,
+        "example_values": [
+          "2026-03-14",
+          "2025-06-30",
+          "2026-01-31"
+        ],
+        "notes": []
+      },
+      {
+        "name": "tipo_cancelamento",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 24.618000000000002,
+        "unique_values": 3,
+        "example_values": [
+          "INVOLUNTARIO",
+          "VOLUNTARIO"
+        ],
+        "notes": []
+      },
+      {
+        "name": "produtos",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 0.036000000000000004,
+        "unique_values": 2,
+        "example_values": [
+          "Globoplay Premium"
+        ],
+        "notes": []
+      },
+      {
+        "name": "produto_banda_larga",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 270,
+        "example_values": [
+          "700Mega + Conta Outra Vez + Skeelo Ebook + Bebanca Revistas + SuperComics + Qualifica",
+          "450Mega + Conta Outra Vez + Skeelo Minibook + Bebanca Revistas + SuperComics + Fitanywhere (89,99)",
+          "300Mega + Conta Outra Vez + Skeelo Minibook + Bebanca Revistas + SuperComics + Fitanywhere (89,99)"
+        ],
+        "notes": []
+      },
+      {
+        "name": "preco_banda_larga",
+        "dtype": "float64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 89,
+        "example_values": [
+          "114.9",
+          "109.99",
+          "89.99"
+        ],
+        "notes": []
+      },
+      {
+        "name": "velocidade_internet",
+        "dtype": "float64",
+        "role": "id",
+        "non_null_pct": 100.0,
+        "unique_values": 18,
+        "example_values": [
+          "700.0",
+          "450.0",
+          "300.0"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "otts",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 5.664000000000001,
+        "unique_values": 47,
+        "example_values": [
+          "Globoplay , Globoplay , Globoplay, Globoplay ",
+          "Globoplay",
+          "Globoplay , Globoplay, Globoplay "
+        ],
+        "notes": []
+      },
+      {
+        "name": "estado",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 12,
+        "example_values": [
+          "SP",
+          "PI",
+          "RJ"
+        ],
+        "notes": []
+      },
+      {
+        "name": "cidade",
+        "dtype": "object",
+        "role": "id",
+        "non_null_pct": 100.0,
+        "unique_values": 207,
+        "example_values": [
+          "GUARUJA",
+          "GUARULHOS",
+          "TERESINA"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "bairro",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 1459,
+        "example_values": [
+          "BALNEARIO PRAIA DO PEREQUE",
+          "JARDIM VIRGINIA",
+          "CIDADE PARQUE BRASILIA"
+        ],
+        "notes": []
+      },
+      {
+        "name": "regiao_comercial",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 99.992,
+        "unique_values": 16,
+        "example_values": [
+          "R4",
+          "R3",
+          "R13"
+        ],
+        "notes": []
+      },
+      {
+        "name": "olt_id",
+        "dtype": "object",
+        "role": "id",
+        "non_null_pct": 95.204,
+        "unique_values": 564,
+        "example_values": [
+          "NIU-PRQ-GRJ-OHW-01",
+          "VIP-GRU-1-SPO-ONK-03",
+          "br.pi.tsa.cto.gp.01"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "serial_olt",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 95.204,
+        "unique_values": 2718,
+        "example_values": [
+          "48575443A75064B4",
+          "ALCLFC107985",
+          "48575443A5E71BAC"
+        ],
+        "notes": []
+      },
+      {
+        "name": "marca_modem",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 58.882,
+        "unique_values": 5,
+        "example_values": [
+          "HUAWEI",
+          "FIBERHOME",
+          "ZTE"
+        ],
+        "notes": []
+      },
+      {
+        "name": "modelo_modem",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 67.814,
+        "unique_values": 28,
+        "example_values": [
+          "EG8145V5-V2",
+          "G1425GA",
+          "HG6145F"
+        ],
+        "notes": []
+      },
+      {
+        "name": "canal_venda",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 99.888,
+        "unique_values": 14,
+        "example_values": [
+          "LOJA",
+          "PAP INDIRETO",
+          "AGENTE DIGITAL"
+        ],
+        "notes": []
+      },
+      {
+        "name": "email_vendedor",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 99.888,
+        "unique_values": 565,
+        "example_values": [
+          "waleria.santos@alloha.com",
+          "isabella.s.rs9@alloha.com",
+          "thiago.junior@mundiale.com.br"
+        ],
+        "notes": []
+      },
+      {
+        "name": "id_tecnico_instalacao",
+        "dtype": "float64",
+        "role": "id",
+        "non_null_pct": 98.97,
+        "unique_values": 987,
+        "example_values": [
+          "3229.0",
+          "3106.0",
+          "4170.0"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      }
+    ]
+  },
+  {
+    "file_path": "inputs/Bloco_2_2026-03-23_18_31_06_2026_03_23.csv",
+    "row_count": 50000,
+    "columns": [
+      {
+        "name": "olt_equipamento",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 1064,
+        "example_values": [
+          "OLT-NK-SJM-01",
+          "OLT-FH-ARBU02-01",
+          "br.ce.fla.atn.gp.02"
+        ],
+        "notes": []
+      },
+      {
+        "name": "motivo_abertura",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 4,
+        "example_values": [
+          "Incidente de Rede",
+          "Manutenção Emergencial",
+          "Manutenção Programada"
+        ],
+        "notes": []
+      },
+      {
+        "name": "inicio_evento",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 49983,
+        "example_values": [
+          "2026-02-08, 17:22:20",
+          "2026-03-18, 14:51:10",
+          "2026-03-19, 01:33:19"
+        ],
+        "notes": [
+          "alta cardinalidade"
+        ]
+      },
+      {
+        "name": "fim_evento",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 99.866,
+        "unique_values": 49666,
+        "example_values": [
+          "2025-01-01, 17:09:49",
+          "2025-01-01, 00:30:19",
+          "2025-01-01, 00:34:09"
+        ],
+        "notes": []
+      }
+    ]
+  },
+  {
+    "file_path": "inputs/Bloco_4_2026-03-23_18_31_06_2026_03_23.csv",
+    "row_count": 50000,
+    "columns": [
+      {
+        "name": "id_cliente",
+        "dtype": "int64",
+        "role": "id",
+        "non_null_pct": 100.0,
+        "unique_values": 30538,
+        "example_values": [
+          "3067804",
+          "3134482",
+          "2021216"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "id_ticket",
+        "dtype": "int64",
+        "role": "id",
+        "non_null_pct": 100.0,
+        "unique_values": 48830,
+        "example_values": [
+          "39426094",
+          "45068260",
+          "47606303"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "data_abertura",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 48550,
+        "example_values": [
+          "2025-03-13 10:51:55",
+          "2025-06-30 14:44:23",
+          "2025-08-21 13:47:57"
+        ],
+        "notes": [
+          "alta cardinalidade"
+        ]
+      },
+      {
+        "name": "data_conclusao",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 86.982,
+        "unique_values": 39138,
+        "example_values": [
+          "2025-03-14 04:09:22",
+          "2025-07-01 03:06:16",
+          "2025-08-21 13:52:27"
+        ],
+        "notes": []
+      },
+      {
+        "name": "motivo",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 7,
+        "example_values": [
+          "SUPORTE TÉCNICO",
+          "ANÁLISE INTERNA",
+          "CHD_ST"
+        ],
+        "notes": []
+      },
+      {
+        "name": "canal_atendimento",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 6,
+        "example_values": [
+          "Humano",
+          "App",
+          "Ativo"
+        ],
+        "notes": []
+      },
+      {
+        "name": "status_ticket",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 2,
+        "example_values": [
+          "Fechado",
+          "Aberto"
+        ],
+        "notes": []
+      },
+      {
+        "name": "status_contrato",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 4,
+        "example_values": [
+          "ST_CONT_CANCELADO",
+          "ST_CONT_SUSP_DEBITO",
+          "ST_CONT_SUSP_SOLICITACAO"
+        ],
+        "notes": []
+      },
+      {
+        "name": "prazo_resolucao",
+        "dtype": "float64",
+        "role": "numérica",
+        "non_null_pct": 86.982,
+        "unique_values": 109,
+        "example_values": [
+          "1.0",
+          "0.0",
+          "6.0"
+        ],
+        "notes": []
+      },
+      {
+        "name": "qtd_chamados_financeiros_90d",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 21,
+        "example_values": [
+          "0",
+          "2",
+          "4"
+        ],
+        "notes": []
+      },
+      {
+        "name": "flag_rechamada_voz_24h",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 2,
+        "example_values": [
+          "0",
+          "1"
+        ],
+        "notes": [
+          "binária"
+        ]
+      },
+      {
+        "name": "flag_rechamada_voz_7d",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 2,
+        "example_values": [
+          "0",
+          "1"
+        ],
+        "notes": [
+          "binária"
+        ]
+      },
+      {
+        "name": "total_interacoes_voz",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 44,
+        "example_values": [
+          "0",
+          "1",
+          "3"
+        ],
+        "notes": []
+      }
+    ]
+  },
+  {
+    "file_path": "inputs/Bloco_5_2026-03-23_18_31_06_2026_03_23.csv",
+    "row_count": 50000,
+    "columns": [
+      {
+        "name": "id_cliente",
+        "dtype": "int64",
+        "role": "id",
+        "non_null_pct": 100.0,
+        "unique_values": 13346,
+        "example_values": [
+          "221594",
+          "290580",
+          "173526"
+        ],
+        "notes": [
+          "possível identificador"
+        ]
+      },
+      {
+        "name": "mes_referencia",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 14,
+        "example_values": [
+          "2019-00",
+          "2020-00",
+          "2021-00"
+        ],
+        "notes": []
+      },
+      {
+        "name": "valor_fatura",
+        "dtype": "float64",
+        "role": "numérica",
+        "non_null_pct": 99.03999999999999,
+        "unique_values": 9739,
+        "example_values": [
+          "147.3",
+          "89.9",
+          "150.82"
+        ],
+        "notes": []
+      },
+      {
+        "name": "data_vencimento",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 1560,
+        "example_values": [
+          "2019-10-27",
+          "2019-12-05",
+          "2020-02-10"
+        ],
+        "notes": []
+      },
+      {
+        "name": "data_pagamento",
+        "dtype": "object",
+        "role": "desconhecido",
+        "non_null_pct": 80.298,
+        "unique_values": 1338,
+        "example_values": [
+          "2021-03-25",
+          "2021-05-27",
+          "2022-02-14"
+        ],
+        "notes": []
+      },
+      {
+        "name": "dias_atraso",
+        "dtype": "int64",
+        "role": "numérica",
+        "non_null_pct": 100.0,
+        "unique_values": 1390,
+        "example_values": [
+          "2339",
+          "2300",
+          "2233"
+        ],
+        "notes": []
+      },
+      {
+        "name": "status_pagamento",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 3,
+        "example_values": [
+          "não pago/inadimplente",
+          "pago em atraso",
+          "pago"
+        ],
+        "notes": []
+      },
+      {
+        "name": "flag_mudanca_plano",
+        "dtype": "object",
+        "role": "categórica",
+        "non_null_pct": 100.0,
+        "unique_values": 1,
+        "example_values": [
+          "não"
+        ],
+        "notes": []
+      }
+    ]
+  }
+]

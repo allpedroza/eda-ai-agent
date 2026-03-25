@@ -1,81 +1,135 @@
-# Plano de EDA orientado ao framework proposto
+# Plano de EDA — Dados de Telecom (Banda Larga + Incidentes de Rede)
 
-Este documento descreve um roteiro detalhado para conduzir uma análise exploratória dos dados (EDA) alinhada ao framework fornecido, com foco em gerar hipóteses acionáveis para o time de Marketing e um ranking de variáveis prioritárias para o time de Ciência de Dados. O plano foi desenhado para ser executado em Python, mas pode ser adaptado a outras linguagens.
+Este documento descreve o roteiro de análise exploratória aplicado aos datasets disponíveis em `inputs/`:
 
-## 1. Preparação do ambiente e inventário de dados
-1. Identificar todas as fontes de dados relevantes (inscrições, eventos de captação, atributos institucionais, indicações sociais, etc.).
-2. Consolidar os dados em um repositório acessível (por exemplo, arquivos CSV ou um banco relacional) e documentar o dicionário de dados.
-3. Rodar o script `python scripts/schema_inspector.py --data-dir data --output schema_summary.md` para mapear automaticamente os schemas disponíveis em `data/` e antecipar potenciais variáveis de modelagem.
-4. Configurar um ambiente analítico (notebook Jupyter ou script Python) com as dependências essenciais:
-   - `pandas`, `numpy`
-   - Ferramenta de EDA automatizada (ex.: `ydata-profiling`, `sweetviz` ou `pandas-profiling`)
-   - Bibliotecas de visualização (`matplotlib`, `seaborn`, `plotly`)
-   - Opcional: `pm4py` para mineração de processos se houver logs de eventos.
+- **Bloco_1**: Base mensal de clientes de banda larga (~3,9 M linhas) — contratos, preços, velocidades, cancelamentos, modens, canais de venda, geografia.
+- **Bloco_2**: Log de incidentes de rede por equipamento OLT (~101 k linhas) — timestamps de abertura/encerramento, motivo, identificador do equipamento.
 
-## 2. Carregamento dos dados
-1. Importar os datasets prioritários (inscritos, leads, campanhas, atributos institucionais, redes sociais, histórico de disciplinas, etc.).
-2. Aplicar verificações de integridade (contagem de linhas, colunas, tipos de dados, datas válidas) e salvar amostras iniciais para conferência.
-
-## 3. Geração automática de relatórios de EDA
-1. Executar uma ferramenta de EDA automática (ex.: `ydata-profiling.ProfileReport`) para cada tabela principal e também para merges importantes (ex.: inscritos + campanhas + atributos institucionais).
-2. Armazenar os relatórios em HTML para fácil compartilhamento com stakeholders.
-3. Revisar os alertas automáticos (valores constantes, ausências, distribuições enviesadas) e anotá-los em um log de achados preliminares.
-
-## 4. Limpeza e padronização inicial
-1. Tratar valores ausentes seguindo recomendações do relatório (por exemplo, imputar medianas em variáveis contínuas com baixa taxa de ausência, criar categoria "Desconhecido" para campos categóricos, descartar colunas com mais de 95% ausentes).
-2. Padronizar categorias (ex.: normalizar nomes de instituições, consolidar variações em campos como "Gênero" ou "Tipo de Campanha").
-3. Detectar outliers em variáveis críticas (ex.: investimento em campanhas, notas de disciplinas) utilizando IQR ou z-score, avaliando se devem ser capados, transformados ou apenas sinalizados.
-
-## 5. Síntese automática das descobertas
-1. Utilizar um assistente LLM (como GPT) para ler os relatórios HTML gerados e produzir um resumo em linguagem natural com os principais insights:
-   - Variáveis com maior variabilidade e correlação com a meta (ex.: conversão, retenção).
-   - Segmentos que se destacam (ex.: instituições de determinados tipos, redes sociais específicas, turmas com determinados padrões de indicação).
-   - Anomalias ou clusters sugeridos pela distribuição dos dados.
-2. Registrar esses resumos em um documento compartilhado com as equipes de Marketing e Ciência de Dados.
-
-## 6. Exploração visual direcionada
-1. Criar um notebook com templates de visualização reutilizáveis (histogramas, boxplots, scatterplots, heatmaps, séries temporais).
-2. Gerar gráficos orientados às hipóteses de negócio:
-   - **Hipótese de Marketing 1:** Instituições de ensino de determinados tipos precisam de campanhas presenciais → analisar taxa de conversão por tipo de instituição e por proximidade geográfica das campanhas.
-   - **Hipótese de Marketing 2:** Inscritos influenciados por determinados círculos sociais → avaliar correlação entre canais de indicação e disciplinas escolhidas.
-   - **Hipótese de Marketing 3:** Disciplinas específicas como diferencial → comparar taxas de retenção/inscrição para alunos que escolhem determinadas disciplinas versus outros.
-3. Documentar observações relevantes e possíveis ações (ex.: "Campanhas presenciais aumentam a taxa de inscrição em determinados tipos de instituições").
-
-## 7. Priorização de variáveis para Ciência de Dados
-1. Construir uma tabela agregada com o target de interesse (ex.: conversão, retenção, performance acadêmica).
-2. Calcular métricas de importância preliminar:
-   - Correlação (Pearson/Spearman) para variáveis contínuas.
-   - Testes de hipótese (t-test, ANOVA, qui-quadrado) para variáveis categóricas.
-   - Feature importance usando modelos baseline (ex.: árvore de decisão rasa, Random Forest com validação rápida).
-3. Gerar um ranking das variáveis mais relevantes, justificando cada posição com evidências (estatísticas e gráficos) e destacando variáveis que merecem coleta/qualificação adicional.
-
-## 8. Testes de hipóteses e análises específicas
-1. Manter uma lista formal de hipóteses (como as fornecidas pelo time de Marketing) em um quadro Kanban ou planilha.
-2. Para cada hipótese, detalhar:
-   - Dados necessários
-   - Métrica/indicador de sucesso
-   - Abordagem estatística sugerida (teste A/B, análise de variância, regressão, etc.)
-   - Resultado preliminar (significância, tamanho de efeito, recomendações)
-3. Automatizar, quando possível, a execução desses testes via scripts reutilizáveis.
-
-## 9. Mineração de processos (opcional)
-Se houver logs de eventos (ex.: jornada do inscrito, interações com campanha):
-1. Utilizar `pm4py` para extrair métricas-chave (tempo de ciclo, gargalos, variantes de processo).
-2. Correlacionar insights de processo com métricas de conversão/retenção para identificar estágios críticos.
-
-## 10. Governança e documentação
-1. Versionar notebooks, scripts e relatórios em repositório Git.
-2. Registrar decisões de limpeza e transformações aplicadas.
-3. Preparar um sumário executivo destacando:
-   - Principais insights confirmados
-   - Hipóteses com evidências para ações imediatas
-   - Top variáveis para o time de Ciência de Dados continuar a modelagem
-   - Recomendações para coleta de dados complementar
-
-## 11. Próximos passos
-1. Validar os achados com stakeholders (Marketing, Ciência de Dados, equipe acadêmica).
-2. Definir experimentos ou campanhas-piloto baseados nas hipóteses prioritárias.
-3. Iniciar a etapa de modelagem ou aprofundamento analítico com base no ranking de variáveis.
+O objetivo é identificar padrões de churn, qualidade de serviço, confiabilidade da infraestrutura e oportunidades de melhoria operacional.
 
 ---
-Este roteiro garante que a EDA seja completa, colaborativa e orientada a hipóteses, acelerando a geração de conhecimento e facilitando a transição para as próximas fases do projeto.
+
+## 1. Preparação do ambiente e inventário de dados
+
+1. Instalar dependências listadas em `requirements.txt`.
+2. Rodar o inspetor de schema para mapear colunas, cobertura e tipos:
+   ```bash
+   python scripts/schema_inspector.py \
+     --data-dir inputs \
+     --sample-rows 50000 \
+     --output schema_summary.md \
+     --json-output schema_summary.json
+   ```
+3. Revisar `schema_summary.md` para identificar colunas com alta taxa de nulos, constantes ou de alta cardinalidade antes de qualquer análise.
+
+---
+
+## 2. Carregamento e integridade dos dados
+
+1. Carregar `Bloco_1` com amostragem inicial (ex.: 200 k linhas) para verificação rápida; carregar completo para análises definitivas.
+2. Carregar `Bloco_2` integralmente (8 MB).
+3. Verificar:
+   - Contagem de linhas e colunas por arquivo.
+   - Tipos de dados inferidos vs. esperados (ex.: `mes_referencia` como string vs. período).
+   - Duplicatas de chave primária (`codigo_cliente` + `mes_referencia` em Bloco_1; `olt_equipamento` + `inicio_evento` em Bloco_2).
+   - Intervalo temporal coberto pelos dados.
+
+---
+
+## 3. Análise exploratória — Bloco_1 (Clientes)
+
+### 3.1 Distribuições univariadas
+- `preco_banda_larga`: histograma, boxplot — identificar clusters de preço e outliers.
+- `velocidade_internet`: frequência por faixa de velocidade.
+- `produtos` / `produto_banda_larga`: distribuição de mix de produtos.
+- `otts`: cobertura e distribuição de serviços OTT contratados.
+- `canal_venda`: volume e mix de canais.
+- `estado` / `regiao_comercial`: distribuição geográfica.
+
+### 3.2 Análise temporal
+- Evolução mensal de `mes_referencia`: base ativa, entradas e saídas.
+- Curva de permanência: tempo entre `data_entrada_base` e `data_cancelamento`.
+- Sazonalidade de cancelamentos por mês/trimestre.
+
+### 3.3 Análise de churn
+- Taxa de cancelamento por `tipos_cancelamento` — quais motivos dominam?
+- Churn por `velocidade_internet`, `preco_banda_larga`, `canal_venda`, `estado`.
+- Perfil de clientes cancelados vs. ativos: preço médio, velocidade, tempo de base.
+
+### 3.4 Qualidade dos dados
+- Cobertura de `email_vendedor`, `id_tecnico_instalacao`, `bairro` — campos frequentemente incompletos em bases operacionais.
+- Consistência de `marca_modem` / `modelo_modem` — padronização de nomes.
+- Valores nulos em `data_cancelamento` (esperado para clientes ativos) vs. `tipos_cancelamento`.
+
+---
+
+## 4. Análise exploratória — Bloco_2 (Incidentes de Rede)
+
+### 4.1 Distribuições univariadas
+- `motivo_abertura`: frequência por tipo de incidente.
+- `olt_equipamento`: ranking de OLTs com maior número de incidentes.
+
+### 4.2 Análise de duração
+- Calcular duração dos incidentes: `fim_evento - inicio_evento`.
+- Distribuição de duração (histograma, percentis p50/p90/p99).
+- Incidentes sem `fim_evento` (em aberto) — quantidade e equipamentos afetados.
+
+### 4.3 Análise temporal
+- Frequência de incidentes por hora do dia e dia da semana — identificar janelas críticas.
+- Tendência mensal: volume de incidentes crescendo ou decrescendo?
+- Identificar períodos de alta concentração de incidentes (possíveis eventos maiores).
+
+### 4.4 Equipamentos críticos
+- Top OLTs por volume de incidentes e por duração total acumulada.
+- OLTs com incidentes recorrentes em janela curta (possível instabilidade crônica).
+
+---
+
+## 5. Análise cruzada Bloco_1 × Bloco_2
+
+1. Fazer join via `olt_id` / `serial_olt` (Bloco_1) ↔ `olt_equipamento` (Bloco_2).
+2. Avaliar se clientes em OLTs com alta taxa de incidentes têm maior taxa de cancelamento.
+3. Medir o impacto de incidentes de longa duração no churn no mês seguinte.
+4. Identificar regiões geográficas onde a qualidade de rede (incidentes) e o churn estão correlacionados.
+
+---
+
+## 6. Hipóteses prioritárias
+
+| # | Hipótese | Métricas | Abordagem |
+|---|----------|----------|-----------|
+| H1 | OLTs com mais incidentes concentram maior churn | Taxa de churn por OLT vs. nº de incidentes | Correlação de Spearman, scatter plot |
+| H2 | Clientes de entrada recente (< 3 meses) têm churn maior | Curva de sobrevivência por coorte de entrada | Kaplan-Meier ou tabela de coorte |
+| H3 | Canais de venda diferem na qualidade do cliente retido | Churn por canal ao longo do tempo | ANOVA / teste qui-quadrado |
+| H4 | Preço acima da mediana reduz churn (percepção de qualidade) | Churn por faixa de preço | Regressão logística simples |
+| H5 | Incidentes noturnos têm maior impacto no churn que diurnos | Duração × horário × churn subsequente | Análise de correlação |
+
+---
+
+## 7. Priorização de variáveis para modelagem
+
+1. Construir tabela analítica com unidade `codigo_cliente × mes_referencia`, incluindo features derivadas de incidentes (nº de incidentes no mês, duração total acumulada).
+2. Calcular correlação com variável alvo (`churn_flag` derivada de `data_cancelamento`).
+3. Executar feature importance com modelo baseline (Random Forest ou LightGBM com 5-fold CV).
+4. Gerar ranking final com evidências estatísticas e gráficos de suporte.
+
+---
+
+## 8. Governança e documentação
+
+1. Versionar notebooks, scripts e relatórios no repositório Git.
+2. Registrar decisões de limpeza e transformações no próprio notebook (células markdown).
+3. Preparar sumário executivo com:
+   - Principais padrões identificados
+   - Hipóteses confirmadas/refutadas
+   - Top variáveis para modelagem de churn
+   - Gaps de dados que exigem coleta adicional (ex.: dados de atendimento ao cliente, reclamações)
+
+---
+
+## 9. Próximos passos
+
+1. Validar achados com times de negócio (Operações, Comercial, Engenharia de Rede).
+2. Definir target de modelagem e período de observação (ex.: churn nos próximos 30/60/90 dias).
+3. Construir pipeline de feature engineering a partir do schema validado.
+4. Avaliar necessidade de dados complementares (ex.: histórico de atendimento, tickets de suporte, velocidade real medida vs. contratada).

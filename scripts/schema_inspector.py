@@ -88,7 +88,7 @@ def infer_role(column: pd.Series, name: str, target: Optional[str]) -> (str, Lis
     if pd.api.types.is_bool_dtype(column):
         return "binária", notes
 
-    if pd.api.types.is_string_dtype(column) or pd.api.types.is_categorical_dtype(column):
+    if pd.api.types.is_string_dtype(column) or isinstance(column.dtype, pd.CategoricalDtype):
         unique_ratio = column.nunique(dropna=False) / max(len(column), 1)
         if unique_ratio > 0.9:
             notes.append("alta cardinalidade")
@@ -102,7 +102,10 @@ def load_table(path: Path, sample_rows: Optional[int]) -> pd.DataFrame:
     if suffix == ".csv":
         return pd.read_csv(path, nrows=sample_rows, low_memory=False)
     if suffix == ".parquet":
-        return pd.read_parquet(path)
+        df = pd.read_parquet(path)
+        if sample_rows is not None:
+            df = df.head(sample_rows)
+        return df
     if suffix == ".feather":
         return pd.read_feather(path)
     if suffix in {".xlsx", ".xls"}:
@@ -140,7 +143,7 @@ def summarize_table(path: Path, target: Optional[str], sample_rows: Optional[int
 
 def build_argument_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Summarize schemas for datasets in a directory.")
-    parser.add_argument("--data-dir", type=Path, default=Path("data"), help="Directory with source datasets.")
+    parser.add_argument("--data-dir", type=Path, default=Path("inputs"), help="Directory with source datasets.")
     parser.add_argument("--target", type=str, default=None, help="Target column for modeling (optional).")
     parser.add_argument(
         "--sample-rows",

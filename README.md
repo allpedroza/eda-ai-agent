@@ -1,18 +1,18 @@
-# Fluxo para inspeção de schemas na pasta `data/`
+# Fluxo para inspeção de schemas na pasta `inputs/`
 
-Este guia explica como gerar um resumo rápido dos arquivos disponíveis em `data/`
+Este guia explica como gerar um resumo rápido dos arquivos disponíveis em `inputs/`
 para apoiar a priorização de variáveis antes da etapa de modelagem.
 
 ## 1. Preparar o ambiente
 
-1. Garanta que as dependências principais estejam instaladas (Python 3.9+, `pandas`).
-2. Verifique se os arquivos tabulares (CSV, Parquet, Excel) estão salvos dentro de `data/`
+1. Instale as dependências listadas em `requirements.txt` (Python 3.9+).
+2. Verifique se os arquivos tabulares (CSV, Parquet, Excel) estão salvos dentro de `inputs/`
 ou de subpastas.
 
 ## 2. Executar o inspetor de schema
 
 ```bash
-python scripts/schema_inspector.py --data-dir data --output schema_summary.md --json-output schema_summary.json
+python scripts/schema_inspector.py --data-dir inputs --output schema_summary.md --json-output schema_summary.json
 ```
 
 Argumentos úteis:
@@ -45,7 +45,7 @@ variáveis devem ser priorizadas na análise estatística e nos modelos.
 3. Utilizar o JSON exportado para alimentar notebooks de EDA automatizada ou pipelines de feature store,
    garantindo rastreabilidade das decisões.
 4. Atualizar o `eda_framework_plan.md` com observações específicas obtidas a partir do relatório para que
-   as equipes de Marketing e Ciência de Dados tenham um mapa claro dos dados disponíveis.
+   as equipes de análise e ciência de dados tenham um mapa claro dos dados disponíveis.
 
 Com esse fluxo, conseguimos responder rapidamente à pergunta sobre "quais variáveis temos à disposição"
-assim que os arquivos são disponibilizados em `data/`, acelerando a priorização de hipóteses e features.
+assim que os arquivos são disponibilizados em `inputs/`, acelerando a priorização de hipóteses e features.
