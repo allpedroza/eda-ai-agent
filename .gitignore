@@ -1,4 +1,28 @@
 __pycache__/
 .DS_Store
+.venv/
+.env
+
+# Raw data — never commit
 inputs/
-outputs/
+data/
+parquet/
+*.parquet
+*.csv
+*.xlsx
+
+# Client-specific outputs — never commit analysis artifacts here
+# (use the dedicated client repo instead)
+configs/telecom_*.yaml
+configs/cliente_*.yaml
+outputs/inadimp*/
+outputs/cascade*/
+outputs/relatorio_*/
+outputs/conclusao_*/
+outputs/validacao_*/
+outputs/inconsistencias_*/
+outputs/segmentacao_*/
+outputs/concentracao_*/
+outputs/gravidade_*/
+outputs/aprofundamento_*/
+CODEX_CONTEXT.md
